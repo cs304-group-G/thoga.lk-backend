@@ -5,7 +5,7 @@ const register = async (req, res) => {
   const { name, email, phone } = req.body;
   const password = generatePassword();
 
-  // TODO: setup sms and reove console log
+  // TODO: setup sms and remove console log
   console.log(password);
 
   bcrypt
@@ -20,10 +20,6 @@ const register = async (req, res) => {
         phone: phone,
         role: "pending",
       });
-
-      // temp password (password) need to send via sms here
-      // phone -> user.phone
-      await sendFirstTimeOTP(phone, password);
 
       user
         .save()
