@@ -19,6 +19,12 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    tempPassword: {
+      // Act as otp but not expired until reset requist trigerd, 
+      // TODO: make it expired in given time limit
+      type: String,
+      required: false,
+    },
     role: {
       type: String,
       enum: ["ADMIN", "MODERATOR", "SELLER", "USER"],
