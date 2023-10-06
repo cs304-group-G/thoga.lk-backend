@@ -20,19 +20,20 @@ const UserSchema = new mongoose.Schema(
       required: true,
     },
     role: {
-      type: Enumerator<String>("ADMIN", "MODERATOR", "SELLER", "USER"),
+      type: String,
+      enum: ["ADMIN", "MODERATOR", "SELLER", "USER"],
       required: true,
-      default: "USER"
+      default: "USER",
     },
     isVerified: {
-        type:  Boolean,
-        required: true,
-        default: false
-    }
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-module.exports = mongoose.model.Users || mongoose.model("Users", UserSchema);
+export default mongoose.model.Users || mongoose.model("Users", UserSchema);

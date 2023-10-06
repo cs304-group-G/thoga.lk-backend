@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import passportLocal from "passport-local";
 import passportJWT from "passport-jwt";
 
-import User from "../models/user.model";
+import User from "../models/user.model.js";
 
 // passport js
 const LocalStrategy = passportLocal.Strategy;
@@ -13,7 +13,7 @@ const ExtractJwt = passportJWT.ExtractJwt;
 const SECRET_KEY = process.env.SECRET_KEY;
 
 // Create local strategy
-exports.localStrategy = new LocalStrategy(
+const localStrategy = new LocalStrategy(
   { usernameField: "email" },
   async (email, password, done) => {
     try {
@@ -33,7 +33,7 @@ exports.localStrategy = new LocalStrategy(
 );
 
 // Create JWT strategy
-exports.jwtStrategy = new JwtStrategy(
+const jwtStrategy = new JwtStrategy(
   {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: SECRET_KEY,
@@ -48,3 +48,5 @@ exports.jwtStrategy = new JwtStrategy(
       });
   }
 );
+
+export { localStrategy, jwtStrategy };
