@@ -8,6 +8,7 @@ import { localStrategy, jwtStrategy } from "./config/passport.config.js";
 
 // import routes
 import AuthRouter from "./routes/auth.route.js";
+import ReviewRouter from "./routes/review.route.js";
 
 dotenv.config();
 
@@ -44,6 +45,7 @@ passport.use(jwtStrategy);
 
 // mount routes
 app.use("/api/v1/auth", AuthRouter);
+app.use("/api/v1/review", ReviewRouter);
 
 // server listening to requests on PORT on env file
 app.listen(PORT, () => {
