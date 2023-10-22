@@ -60,13 +60,13 @@ const login = async (req, res) => {
     { expiresIn: "24h" }
   );
 
-  if (req.user.role == "ADMIN" || req.user.role == "USER") {
+  if (req.user.role == "ADMIN" || req.user.role == "USER"|| req.user.role == "SELLER") {
     const resObject = {
       token: token,
       role: req.user.role,
     };
     return res.status(200).send(resObject);
-  } else if (req.user.role == "pending") {
+  } else if (req.user.role == "PENDING") {
     return res.status(200).send({
       message:
         "Please note that the user account has not been confirmed yet. you need to login with given credentials and reset password to confirm account",
@@ -76,7 +76,7 @@ const login = async (req, res) => {
   } else {
     return res.status(200).json({
       message:
-        "Prior registration is required before accessing Meeting Management System",
+        "Prior registration is required before accessing",
     });
   }
 };

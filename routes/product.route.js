@@ -5,9 +5,9 @@ import {
   deleteProduct,
   findAll,
   findOne,
-} from "../controller/product.controller";
-import authorization from "../middleware/authorization.middleware";
-import fileHandler from "../middleware/multer.middleware";
+} from "../controller/product.controller.js";
+import authorization from "../middleware/authorization.middleware.js";
+import fileHandler from "../middleware/multer.middleware.js";
 
 const router = express.Router();
 

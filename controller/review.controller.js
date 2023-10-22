@@ -1,4 +1,4 @@
-import Review from "../models/review.model";
+import Review from "../models/review.model.js";
 
 const addReview = async (req, res) => {
   const productId = req.params.id;
@@ -26,7 +26,7 @@ const getReviews = async (req, res) => {
   const productId = req.params.id;
 
   Review.find({ productId: productId })
-    .populate("reviewer")
+    .populate("reviewerId")
     .then((result) => {
       res.status(200).json(result);
     })

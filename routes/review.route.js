@@ -1,8 +1,8 @@
 import express from "express";
 import passport from "passport";
 
-import authorization from "../middleware/authorization.middleware";
-import { addReview, getReviews } from "../controller/review.controller";
+import authorization from "../middleware/authorization.middleware.js";
+import { addReview, getReviews } from "../controller/review.controller.js";
 
 const router = express.Router();
 

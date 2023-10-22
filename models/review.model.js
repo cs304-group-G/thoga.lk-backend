@@ -12,11 +12,11 @@ const ReviewsSchema = new mongoose.Schema(
       required: true,
       default: 3,
     },
-    ReviewerId: {
+    reviewerId: {
       type: Schema.Types.ObjectId,
       ref: "Users",
     },
-    ProductId: {
+    productId: {
       type: Schema.Types.ObjectId,
       ref: "Products",
     },

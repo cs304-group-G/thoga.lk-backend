@@ -4,4 +4,4 @@ const generateFileName = (productId) => {
   return filename;
 };
 
-export default { generateFileName };
+export default generateFileName;

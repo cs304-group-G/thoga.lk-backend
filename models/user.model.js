@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
+      unique: true,
     },
     phone: {
       type: String,
@@ -20,14 +21,14 @@ const UserSchema = new mongoose.Schema(
       required: true,
     },
     tempPassword: {
-      // Act as otp but not expired until reset requist trigerd, 
+      // Act as otp but not expired until reset requist trigerd,
       // TODO: make it expired in given time limit
       type: String,
       required: false,
     },
     role: {
       type: String,
-      enum: ["ADMIN", "MODERATOR", "SELLER", "USER"],
+      enum: ["ADMIN", "MODERATOR", "SELLER", "USER", "PENDING"],
       required: true,
       default: "USER",
     },

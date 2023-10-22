@@ -1,16 +1,15 @@
-import Product from "../models/product.model";
-import uploadFileToFirebaseStorage from "../services/fileupload.service";
+import Product from "../models/product.model.js";
+import uploadFileToFirebaseStorage from "../services/fileupload.service.js";
 
 const addProduct = async (req, res) => {
   const { title, description, price, city } = req.body;
-  const files = req.files["photos"];
-
+  const files = req.files;
   const sellerId = req.user._id;
 
   const photoUrls = [];
 
   files.forEach(async (file) => {
-    const link = await uploadFileToFirebaseStorage(file);
+    const link = await uploadFileToFirebaseStorage(title, file);
     photoUrls.push(link);
   });
 

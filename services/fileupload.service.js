@@ -1,5 +1,6 @@
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { storage } from "../config/firebase.config";
+import { storage } from "../config/firebase.config.js";
+import generateFileName from "../utils/generateFileName.js";
 
 const uploadFileToFirebaseStorage = async (productId, file) => {
   const fileRef = ref(storage, generateFileName(productId));
@@ -19,6 +20,4 @@ const uploadFileToFirebaseStorage = async (productId, file) => {
     });
 };
 
-module.exports = {
-  uploadFileToFirebaseStorage,
-};
+export default uploadFileToFirebaseStorage;
