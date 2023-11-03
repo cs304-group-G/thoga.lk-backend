@@ -21,6 +21,7 @@ const ProductsSchema = new mongoose.Schema(
     photoUrls: [
       {
         type: String,
+        required : true,
       },
     ],
     sellerId: {
