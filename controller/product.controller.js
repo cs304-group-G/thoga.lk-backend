@@ -76,8 +76,8 @@ const deleteProduct = async (req, res) => {
           .json({ error: "you cannot delete other sellers products" });
       }
     })
-    .catch((err) => {
-      res.status(400).json({ error: err.message });
+    .catch((error) => {
+      res.status(400).json({ error: error.message });
     });
 };
 
