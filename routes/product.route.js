@@ -10,7 +10,6 @@ import authorization from "../middleware/authorization.middleware.js";
 import fileHandler from "../middleware/multer.middleware.js";
 
 const router = express.Router();
-
 router.post(
   "/",
   [
@@ -30,5 +29,4 @@ router.delete(
   ],
   deleteProduct
 );
-
 export default router;
