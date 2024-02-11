@@ -49,11 +49,12 @@ const sendMessage = async (req, res) => {
 };
 
 const getChats = async (req, res) => {
-console.log("running 1");
   const id = req.user._id;
 
   Chat.find({ $or: [{ user1: id }, { user2: id }] })
     .populate("messages")
+    .populate("user1")
+    .populate("user2")
     .then((chats) => {
       res.status(200).json(chats);
     })
@@ -63,13 +64,13 @@ console.log("running 1");
 };
 
 const getChatByUser = async (req, res) => {
-  console.log("running 2");
-
   const id = req.user._id;
   const sender = req.params.id;
 
   Chat.find({ user1: { $in: [id, sender] }, user2: { $in: [id, sender] } })
     .populate("messages")
+    .populate("user1")
+    .populate("user2")
     .then((chats) => {
       res.status(200).json(chats);
     })
