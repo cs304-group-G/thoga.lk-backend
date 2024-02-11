@@ -11,6 +11,7 @@ import { localStrategy, jwtStrategy } from "./config/passport.config.js";
 import AuthRouter from "./routes/auth.route.js";
 import ProductRouter from "./routes/product.route.js";
 import ReviewRouter from "./routes/review.route.js";
+import ChatRouter from "./routes/message.route.js";
 import DashboardRouter from "./routes/dashboardItem.route.js";
 
 dotenv.config();
@@ -53,6 +54,7 @@ passport.use(jwtStrategy);
 app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1/product", ProductRouter);
 app.use("/api/v1/review", ReviewRouter);
+app.use("/api/v1/chat", ChatRouter );
 app.use("/api/v1/dashboard", DashboardRouter)
 
 
