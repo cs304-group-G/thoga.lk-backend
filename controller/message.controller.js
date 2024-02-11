@@ -67,7 +67,7 @@ const getChatByUser = async (req, res) => {
   const id = req.user._id;
   const sender = req.params.id;
 
-  Chat.find({ user1: { $in: [id, sender] }, user2: { $in: [id, sender] } })
+  Chat.findOne({ user1: { $in: [id, sender] }, user2: { $in: [id, sender] } })
     .populate("messages")
     .populate("user1")
     .populate("user2")

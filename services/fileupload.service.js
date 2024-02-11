@@ -9,7 +9,7 @@ const uploadFileToFirebaseStorage = async (productId, file) => {
     contentType: file.mimetype,
   };
 
-  uploadBytesResumable(fileRef, file.buffer, metadata)
+  return uploadBytesResumable(fileRef, file.buffer, metadata)
     .then(async (res) => {
       const url = await getDownloadURL(fileRef);
       return url;

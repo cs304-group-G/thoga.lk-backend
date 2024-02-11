@@ -8,28 +8,34 @@ const addProduct = async (req, res) => {
 
   const photoUrls = [];
 
-  files.forEach(async (file) => {
+  // Use map to create an array of promises for each file upload
+  const uploadPromises = files.map(async (file) => {
     const link = await uploadFileToFirebaseStorage(title, file);
-    photoUrls.push(link);
+    return link;
   });
 
-  const product = new Product({
-    title: title,
-    description: description,
-    price: price,
-    city: city,
-    sellerId: sellerId,
-    photoUrls: photoUrls,
-  });
+  try {
+    // Wait for all file uploads to complete
+    const uploadedLinks = await Promise.all(uploadPromises);
 
-  product
-    .save()
-    .then((result) => {
-      res.status(200).json(result);
-    })
-    .catch((err) => {
-      res.status(400).json({ error: err.message });
+    // Add the links to the photoUrls array
+    photoUrls.push(...uploadedLinks);
+
+    const product = new Product({
+      title: title,
+      description: description,
+      price: price,
+      city: city,
+      sellerId: sellerId,
+      photoUrls: photoUrls,
     });
+
+    // Save the product
+    const result = await product.save();
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 };
 
 const findAll = async (req, res) => {
