@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post(
   "/:id",
-  [passport.authenticate("jwt", { session: false }), authorization(["USER"])],
+  [passport.authenticate("jwt", { session: false }), authorization(["USER", "SELLER"])],
   addReview
 );
 router.get("/:id", getReviews);

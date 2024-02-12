@@ -29,11 +29,11 @@ router.post(
   updatePassword
 );
 router.post(
-  "password-force-reset",
+  "/password-force-reset",
   [passport.authenticate("jwt", { session: false })],
   passwordForceReset
 );
-router.post("forget-password-request", forgetPasswordRequest);
-router.post("forget-password-reset", forgetPasswordReset);
+router.post("/forget-password-request", forgetPasswordRequest);
+router.post("/forget-password-reset", forgetPasswordReset);
 
 export default router;

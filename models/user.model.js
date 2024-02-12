@@ -1,15 +1,18 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const UserSchema = new mongoose.Schema(
   {
-    name: {
+    firstname: {
+      type: String,
+      required: true,
+    },
+    lastname: {
       type: String,
       required: true,
     },
     email: {
       type: String,
       required: true,
-      unique: true,
     },
     phone: {
       type: String,
@@ -28,7 +31,7 @@ const UserSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["ADMIN", "MODERATOR", "SELLER", "USER", "PENDING"],
+      enum: ["ADMIN", "MODERATOR", "SELLER", "USER"],
       required: true,
       default: "USER",
     },
@@ -37,6 +40,13 @@ const UserSchema = new mongoose.Schema(
       required: true,
       default: false,
     },
+    sellingProducts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Products",
+      },
+    ],
+    reviews: [{ type: Schema.Types.ObjectId, ref: "Reviews" }],
   },
   {
     timestamps: true,

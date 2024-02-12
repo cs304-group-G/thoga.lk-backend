@@ -6,6 +6,8 @@ const addProduct = async (req, res) => {
   const files = req.files;
   const sellerId = req.user._id;
 
+  console.log(files);
+
   const photoUrls = [];
 
   // Use map to create an array of promises for each file upload
@@ -20,7 +22,7 @@ const addProduct = async (req, res) => {
 
     // Add the links to the photoUrls array
     photoUrls.push(...uploadedLinks);
-
+    
     const product = new Product({
       title: title,
       description: description,

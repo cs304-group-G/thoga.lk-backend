@@ -1,26 +1,29 @@
 import User from "../models/user.model.js";
+import sendTempPassword from "../services/mail.service.js";
 import { generatePassword } from "../utils/generatePassword.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 // POST: {BASE_URL}/auth/register
 const register = async (req, res) => {
-  const { name, email, phone } = req.body;
+  const { firstname, lastname, email, phone, role } = req.body;
   const password = generatePassword();
 
   // TODO: setup sms and remove console log
   console.log(password);
+  sendTempPassword({ to: email, tempPassword: password });
 
   bcrypt
     .hash(password, 10)
     .then(async (hashedPassword) => {
       // creating user object
       const user = new User({
-        name: name,
+        firstname: firstname,
+        lastname: lastname,
         email: email,
         phone: phone,
         password: hashedPassword,
-        role: "USER",
+        role: role,
         isVerified: false,
       });
 
@@ -40,10 +43,9 @@ const register = async (req, res) => {
         });
     })
     .catch((err) => {
-      console.log(err);
+      console.log("kjhdi", err);
       res.status(500).send({
         message: "Password was not hashed successfully",
-        err,
       });
     });
 };
@@ -60,23 +62,18 @@ const login = async (req, res) => {
     { expiresIn: "24h" }
   );
 
-  if (req.user.role == "ADMIN" || req.user.role == "USER"|| req.user.role == "SELLER") {
+  if (req.user.isVerified == true) {
     const resObject = {
       token: token,
       role: req.user.role,
     };
     return res.status(200).send(resObject);
-  } else if (req.user.role == "PENDING") {
+  } else {
     return res.status(200).send({
       message:
         "Please note that the user account has not been confirmed yet. you need to login with given credentials and reset password to confirm account",
       token: token,
       role: req.user.role,
-    });
-  } else {
-    return res.status(200).json({
-      message:
-        "Prior registration is required before accessing",
     });
   }
 };
@@ -87,7 +84,8 @@ const getUserData = async (req, res) => {
     .then((user) => {
       const userData = {
         userID: user._id,
-        name: user.name,
+        firstname: user.firstname,
+        lastname: user.lastname,
         email: user.email,
         phone: user.phone,
         role: user.role,
@@ -116,9 +114,9 @@ const updatePassword = async (req, res) => {
         isVerified: true,
       };
 
-      req.user.role == "admin"
-        ? (update.role = "admin")
-        : (update.role = "collector");
+      req.user.role == "ADMIN"
+        ? (update.role = "ADMIN")
+        : (update.role = "USER");
 
       // saving user data to database
       User.findOneAndUpdate(user, update, { new: true })
@@ -129,7 +127,7 @@ const updatePassword = async (req, res) => {
             });
           } else {
             res.status(201).send({
-              message: "User Registerd Successfully",
+              message: "Password Update Successfull Successfully",
             });
           }
         })
@@ -263,7 +261,7 @@ const forgetPasswordReset = async (req, res) => {
 
             const update = {
               password: hashedPassword,
-              tempPassword: undefined,
+              $unset: { tempPassword: "" },
             };
 
             User.findOneAndUpdate(user, update)
