@@ -53,9 +53,9 @@ const findAll = async (req, res) => {
 const findOne = async (req, res) => {
   const productId = req.params.id;
 
-  Product.findOneById(productId)
-    .populate("Reviews")
-    .populate("SellerId")
+  Product.findById(productId)
+    .populate("reviewId")
+    .populate("sellerId")
     .then((result) => {
       res.status(200).json(result);
     })
